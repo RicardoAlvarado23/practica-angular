@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+    <meta charset="utf-8">
+    <title>AchorScroll</title>
+    <style media="screen">
+        body {
+            height: 800px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .contenido {
+            padding: 45px;
+            text-align: center;
+            font-size: 4em;
+            font-weight: 700;
+            min-height: 100vh;
+            color: white;
+            text-shadow: 1px 1px 4px black;
+        }
+
+        #contenido1 {
+            background-color: rgb(185, 102, 6);
+        }
+
+        #contenido2 {
+            background-color: rgb(160, 180, 81);
+        }
+
+        #contenido3 {
+            background-color: rgb(0, 193, 31);
+        }
+
+        #contenido4 {
+            background-color: rgb(79, 87, 196);
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            background-color: rgb(57, 57, 57);
+            text-align: center;
+            position: fixed;
+            width: 90%;
+            height: 50px;
+            top: 0;
+        }
+
+        .menu a {
+            text-decoration: none;
+            flex-grow: 1;
+            color: rgb(208, 219, 203);
+            font-family: sans-serif;
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 30px;
+            padding: 10px;
+            border-right: 1px solid rgb(186, 186, 186);
+        }
+
+        .menu a:last-child {
+            border-right: none;
+        }
+
+        .menu a:hover {
+            background-color: rgb(19, 20, 20);
+        }
+
+        .menu a.selected {
+            background-color: rgb(19, 20, 20);
+            border-bottom: 4px solid rgb(115, 115, 115);
+        }
+    </style>
+</head>
+
+<body ng-controller="anchorCtrl">
+    <nav class="menu">
+        <a href="" ng-click="irA(1)" ng-class="{selected: c1}">Contenido 1</a>
+        <a href="" ng-click="irA(2)" ng-class="{selected: c2}">Contenido 2</a>
+        <a href="" ng-click="irA(3)" ng-class="{selected: c3}">Contenido 3</a>
+        <a href="" ng-click="irA(4)" ng-class="{selected: c4}">Contenido 4</a>
+    </nav>
+    <div class="contenido" id="contenido1">
+        <h2>Contenido 1</h2>
+    </div>
+    <div class="contenido" id="contenido2">
+        <h2>Contenido 2</h2>
+    </div>
+    <div class="contenido" id="contenido3">
+        <h2>Contenido 3</h2>
+    </div>
+    <div class="contenido" id="contenido4">
+        <h2>Contenido 4</h2>
+    </div>
+    <script src="../../lib/angular/angular.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        angular.module('app', [])
+            .controller('anchorCtrl', ['$scope', '$anchorScroll', '$location', function($scope, $anchorScroll,$location) {
+                $scope.irA = function(id) {
+                    var target = 'contenido' + id;
+                    selectTargetLink(id);
+                    //$location.hash(target)
+                    $anchorScroll(target);
+                }
+
+                function selectTargetLink(id) {
+                    clearLinkSelected();
+                    switch (id) {
+                        case 1:
+                            $scope.c1 = true;
+                            break;
+                        case 2:
+                            $scope.c2 = true;
+                            break;
+                        case 3:
+                            $scope.c3 = true;
+                            break;
+                        case 4:
+                            $scope.c4 = true;
+                            break;
+                        default:
+
+                    }
+                }
+
+                function clearLinkSelected() {
+                    $scope.c1 = false;
+                    $scope.c2 = false;
+                    $scope.c3 = false;
+                    $scope.c4 = false;
+                }
+            }])
+            .run(function($anchorScroll) {
+                $anchorScroll.yOffset = 50;
+            });
+    </script>
+</body>
+
+</html>

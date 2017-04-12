@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Primer Controller</title>
+</head>
+
+<body ng-app="miApp">
+    <div class="container" ng-controller="miCtrl">
+        <h1>{{ mensaje }}</h1>
+    </div>
+    <script type="text/javascript" src="../node_modules/angular/angular.min.js"></script>
+    <script>
+      var app = angular.module('miApp',[]);
+      app.controller('miCtrl',['$scope',function($scope){
+        $scope.mensaje = 'Hola mundo'
+      }]);
+    </script>
+</body>
+
+</html>

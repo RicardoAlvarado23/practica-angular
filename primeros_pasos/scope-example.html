@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Entendiendo los Scopes</title>
+  </head>
+  <body ng-app="miApp">
+    <div class="container" ng-controller="padreController">
+        <button type="button" ng-click="logPadre()">Padre</button>
+        <div ng-controller="hijoController">
+          <button type="button" ng-click="logHijo()">Hijo</button>
+
+        </div>
+        <p>{{logMensaje}}</p>
+    </div>
+    <script type="text/javascript" src="../node_modules/angular/angular.min.js"></script>
+    <script type="text/javascript">
+      var app = angular.module('miApp',[]);
+      app.controller('padreController',['$scope','$rootScope',function($scope,$rootScope){
+        $scope.padre = 'Yo soy el padre';
+        $scope.logPadre = function(){
+          $rootScope.logMensaje = $scope.padre + ' Sorpresa: ' + $rootScope.otro ;
+        }
+      }])
+      app.controller('hijoController',['$scope','$rootScope',function($scope,$rootScope){
+        $scope.hijo = 'Yo soy el hijo';
+        $rootScope.otro = 'Tengo un scope root y estoy disponible en cualquier controlador:O';
+        $scope.logHijo = function(){
+          console.log('hijo')
+          $rootScope.logMensaje = $scope.padre + " y  " + $scope.hijo ;
+        }
+      }])
+    </script>
+  </body>
+</html>

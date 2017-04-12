@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-strict-di>
+
+<head>
+    <meta charset="utf-8">
+    <title>Ejemplo 1 - ng-class</title>
+    <style media="screen">
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: rgb(187, 232, 208);
+        }
+
+        .botones {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            margin-top: 45px;
+        }
+
+        .botones button {
+            margin: 2px 4px;
+            width: 180px;
+            background-color: rgb(243, 243, 243);
+            ;
+            border-radius: 4px;
+            color: rgb(17, 17, 17);
+            padding: 10px 5px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 10px auto;
+            background-color: #fafafa;
+            min-height: 300px;
+            padding: 40px;
+            position: relative;
+        }
+
+        .container:after,
+        .container:before {
+            content: "";
+            width: 96%;
+            height: 5%;
+            background-color: #000;
+            position: absolute;
+            bottom: 2%;
+            box-shadow: 0 5px 6px #000;
+            z-index: -1;
+        }
+
+        .container:before {
+            left: 1%;
+            transform: rotate(-1deg);
+        }
+
+        .container:after {
+            right: 1%;
+            transform: rotate(1deg);
+        }
+
+        .flotar {
+            width: 50%;
+            float: right;
+        }
+
+        .fondoRojo{
+          background-color: rgb(122, 61, 61);
+        }
+
+        .colorBlanco{
+          color: white;
+          text-shadow: 0 0 4px #111;
+        }
+        .bordesRedondeados{
+          border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body ng-controller="clasesCtrl">
+    <div class="botones">
+        <button ng-click="flotar()">Flotar</button>
+        <button ng-click="fondoRojo()">Fondo Rojo</button>
+        <button ng-click="colorBlanco()">Color Blanco</button>
+        <button ng-click="bordesRedondeados()">Bordes Redondeados</button>
+        <button ng-click="resetear()">Resetear</button>
+    </div>
+    <div class="container" ng-class="generarClases()">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+            irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <script src="../../lib/angular/angular.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        var app = angular.module('app', []);
+        app.controller('clasesCtrl', ['$scope', function($scope) {
+            $scope.clases = '';
+            $scope.flotar = function() {
+                $scope.clases = $scope.clases + ' flotar';
+            }
+
+            $scope.fondoRojo = function() {
+                $scope.clases = $scope.clases + ' fondoRojo';
+            }
+            $scope.colorBlanco = function() {
+                $scope.clases = $scope.clases + ' colorBlanco';
+            }
+            $scope.bordesRedondeados = function() {
+                $scope.clases = $scope.clases + ' bordesRedondeados';
+            }
+
+            $scope.resetear = function() {
+                $scope.clases = '';
+            }
+
+            $scope.generarClases = function() {
+                return $scope.clases;
+            }
+        }]);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-strict-di>
+
+<head>
+    <meta charset="utf-8">
+    <title>Factory</title>
+</head>
+
+<body>
+    <div class="container" ng-controller="PlaylistCtrl">
+        <ul>
+            <li ng-repeat="titulo in playlist">{{titulo}}</li>
+        </ul>
+    </div>
+    <div class="container" ng-controller="PlaylistMetodosCtrl">
+        <ul>
+            <li ng-repeat="titulo in playlist">{{titulo}}
+              <a class="button" href="#" ng-click="borrar($index)">&times;</a>
+            </li>
+        </ul>
+    </div>
+
+    <script src="../../lib/angular/angular.js" charset="utf-8"></script>
+    <script src="js/app.js" charset="utf-8"></script>
+    <script src="js/services/Playlist.js" charset="utf-8"></script>
+    <script src="js/controller/PlaylistCtrl.js" charset="utf-8"></script>
+    <script src="js/controller/PlaylistMetodosCtrl.js" charset="utf-8"></script>
+</body>
+
+</html>

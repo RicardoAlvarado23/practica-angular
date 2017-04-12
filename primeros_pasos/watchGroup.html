@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>WatchGroup</title>
+  </head>
+  <body ng-controller="miCtrl">
+      Ingrese Contraseña: <input type="password" ng-model="password">
+      Repita Contraseña: <input type="password" ng-model="password2">
+      <p ng-show="coincidencia">Las contraseñas no coinciden</p>
+      <script type="text/javascript" src="../node_modules/angular/angular.min.js"></script>
+      <script type="text/javascript">
+        angular.module('app',[])
+                .controller('miCtrl',['$scope',function($scope){
+                  $scope.coincidencia = false;
+                  $scope.$watchGroup(['password','password2'],function(nuevos, anterioriores){
+                    if(!nuevos)return;
+                    if(nuevos[0] && nuevos[1] && (nuevos[0] != nuevos[1])){
+                      $scope.coincidencia = true;
+                    }else{
+                      $scope.coincidencia = false;
+                    }
+                  })
+                }]);
+      </script>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "angularjs",
+  "description": "PRacticando angularjs",
+  "main": "index.js",
+  "authors": [
+    "riap"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-animate": "^1.5.8",
+    "angular-aria": "^1.5.8",
+    "angular-material": "^1.1.1",
+    "angular-material-data-table": "^0.10.9",
+    "angular-md5": "^0.1.10",
+    "angular-route": "^1.5.8",
+    "bootstrap-treeview": "^1.2.0",
+    "font-awesome": "fontawesome#^4.6.3",
+    "ng-file-upload": "^12.2.12"
+  }
+}
