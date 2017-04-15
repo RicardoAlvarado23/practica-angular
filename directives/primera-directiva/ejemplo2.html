@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>Segundo Ejemplo de Directivas</title>
+  </head>
+  <body>
+      <div class="" ng-controller="miControlador">
+        Ingrese mensaje: <input type="text" name="" ng-model="mensaje">
+        <mi-mensaje titulo='Error' tipo= 'warning' mensaje={{mensaje}}></mi-mensaje>
+      </div>
+      <script src="../../lib/angular/angular.js" charset="utf-8"></script>
+      <script type="text/javascript">
+        "use strict";
+        var app = angular.module('app',[]);
+        app.controller('miControlador',['$scope',function($scope){
+
+        }]);
+        app.directive('miMensaje',[function(){
+          var plantilla = '<div class="{{tipo}}">';
+          plantilla += '<h2>{{titulo}}</h2>';
+          plantilla += '<p>{{mensaje}}</p></div>';
+          plantilla += '<input type="text" ng-model="mensaje"/>';
+          return{
+            restrict: 'EA',
+            scope:{
+              titulo: '@',
+              tipo: '@',
+              mensaje: '@'
+            },
+            replace: false,
+            template: plantilla
+          }
+        }]);
+      </script>
+  </body>
+</html>

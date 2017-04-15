@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="miApp">
+
+<head>
+    <meta charset="utf-8">
+    <title>Primera Directiva angular</title>
+</head>
+
+<body>
+    <div class="" ng-controller="miControlador">
+        <user-directiva user='usuario2' saludar-controlador="saludar(msj)"></user-directiva>
+    </div>
+    <script src="../../lib/angular/angular.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        "use strict";
+        var app = angular.module('miApp', []);
+        app.controller('miControlador', ['$scope', function($scope) {
+            $scope.usuario = {
+                name: "Ricardo Alvarado",
+                age: 21,
+                email: "ralvarado@cajasullana.pe"
+            };
+            $scope.usuario2 = {
+                name: "Dana Alvarado",
+                age: 9,
+                email: "dalvarado@cajasullana.pe"
+            };
+            $scope.saludar = function(msj){
+              console.log('hola xxx');
+              alert('hola a todos desde el controlador ' + msj);
+            }
+        }]);
+        app.directive('userDirectiva', [function() {
+            var plantilla = "<a href='mailto:{{usarioDirectiva.email}}'>Enviar Correo</a>";
+            plantilla += "<p><strong>Nombre: <strong> {{usarioDirectiva.name}}</p>";
+            plantilla += "<p><small><b>Edad: </b> {{usarioDirectiva.age}}</small></p>";
+            plantilla += '<input type="text" ng-model="mensajeSaludo"/>'
+            plantilla += "<button ng-click='saludarScope(mensajeSaludo)'>Saludar desde el controlador</button>"
+            return {
+                retrict: 'E',
+                template: plantilla,
+                scope: {
+                  usarioDirectiva: '=user',
+                  saludarControlador: '&'
+                },
+                controller: ['$scope',function($scope){
+                  $scope.mensajeSaludo = 'Hola mundo';
+                  $scope.saludarScope = function(mensaje){
+                    console.log('hola' + mensaje);
+                    $scope.saludarControlador({msj: mensaje});
+                  }
+                }]
+            }
+        }]);
+    </script>
+</body>
+
+</html>

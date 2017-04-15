@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+    <meta charset="utf-8">
+    <title>Ejemplo de Directivas con Link</title>
+</head>
+
+<body>
+    Seleccione Color:
+    <select ng-model='color'>
+      <option value="rojo">Default</option>
+      <option value="rojo" >Rojo</option>
+      <option value="verde">Verde</option>
+      <option value="amarillo">Amarillo</option>
+      <option value="azul">Azul</option>
+    </select>
+    <mi-titular texto="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor." color="rojo" extra='soy extra'></mi-titular>
+    <script src="../../lib/angular/angular.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        angular.module('app', [])
+            .directive('miTitular', [function() {
+              var plantilla;
+                return {
+                    restrict: 'E',
+                    template: '<div><h1>{{texto}}</h1></br><button id="botonJquery">Evento con Jquery</button></div>',
+                    replace: false,
+                    scope: {
+                        texto: '@'
+                    },
+                    link: function(scope, iElement, iAttrs) {
+                        console.log(iAttrs.color);
+                        var color = '';
+                        var boton = angular.element(iElement[0].querySelector('#botonJquery'));
+                        boton.on('click',function(e){
+                          alert('Soy disparado desde Jquery Lite ;) ');
+                        });
+                        switch (iAttrs.color) {
+                            case 'rojo':
+                                color = '#eb2300';
+                                break;
+                            case 'verde':
+                                color = '#008a01';
+                                break;
+                            case 'azul':
+                                color = 'rgb(10, 0, 199)';
+                                break;
+                            case 'amarillo':
+                                color = 'rgba(225, 230, 22, 0.94)';
+                                break;
+                            default:
+                                color = 'rgb(0, 0, 0)';
+                        }
+                        iElement.css({
+                            'cursor': 'pointer',
+                            'color': color,
+                            'font-size': '0.75em'
+                        }).on('mouseenter', function(e) {
+                            iElement.css('color', 'blue');
+                        }).on('mouseleave', function(e) {
+                            iElement.css('color', color);
+                        }).append('<p>' + iAttrs.extra + '</p>');
+                        console.log(iElement);
+                    }
+                }
+            }]);
+    </script>
+</body>
+
+</html>
