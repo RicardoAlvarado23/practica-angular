@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html ng-app = 'app'>
+
+<head>
+    <meta charset="utf-8">
+    <title>Currency Ejemplo</title>
+</head>
+
+<body ng-controller='miControlador'>
+    <p>Costo 1 : {{145345.88 | currency : 'S/.'}}</p>
+    <p>Costo Default: {{costoDefault}}</p>
+    <p>Costo Euro : {{costoEuro}}</p>
+    <h2>Number</h2>
+    <p>Numero 1 : {{ 145*3847.23 | number}}</p>
+    <p>Numero 1 : {{numero}}</p>
+    <script src="../../lib/angular/angular.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      angular.module('app',[])
+        .controller('miControlador',['$scope','$filter',function($scope, $filter){
+          var costo = 1459.45654;
+          $scope.costoDefault = $filter('currency')(costo,'USD',3);
+          $scope.costoEuro = $filter('currency')(costo,'€',5);
+          $scope.numero = $filter('number')(costo * 34 + 12 * 1.29 , 4)
+        }]);
+    </script>
+</body>
+
+</html>

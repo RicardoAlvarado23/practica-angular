@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+
+<head>
+    <meta charset="utf-8">
+    <title>OrderBy</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <style media="screen">
+        * {
+            font-family: Helvetica Neue, Arial, sans-serif;
+        }
+
+        body {
+            background-image: linear-gradient(#aaa 25%, #000);
+        }
+
+        h1,
+        table {
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 70%;
+            margin: 0 auto 5rem;
+        }
+
+        th,
+        td {
+            padding: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        tr {
+            background: hsl(50, 50%, 80%);
+        }
+
+        tr,
+        td {
+            transition: .4s ease-in;
+        }
+
+        thead>tr:first-child {
+            background: hsla(12, 100%, 40%, 0.5);
+        }
+
+        thead>tr>td>a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background: hsla(50, 50%, 80%, 0.7);
+        }
+
+        td:empty {
+            background: hsla(50, 25%, 60%, 0.7);
+        }
+
+        tbody>tr:hover:not(#firstrow),
+        tbody>tr:hover td:empty {
+            background: #ff0;
+            pointer-events: visible;
+        }
+
+        tbody>tr:hover:not(#firstrow) {
+            transform: scale(1.01);
+            font-weight: 700;
+            box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.5);
+        }
+
+        td a i {
+            float: right;
+        }
+    </style>
+</head>
+
+<body ng-controller="miCtrl">
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <td><a href="#" ng-click='campo = "orden"; reverso = !reverso'>Orden</a></td>
+                    <td>Nombre
+                        <a href="#" ng-click='campo = "name"; reverso = !reverso; nameDown = !nameDown'>
+                            <i ng-show='nameDown' class="fa fa-caret-down" aria-hidden="true"></i>
+                            <i ng-hide='nameDown' class="fa fa-caret-up" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                    <td>Email
+                        <a href="#" ng-click='campo = "email"; reverso = !reverso; emailDown = !emailDown'>
+                            <i ng-show='emailDown' class="fa fa-caret-down" aria-hidden="true"></i>
+                            <i ng-hide='emailDown' class="fa fa-caret-up" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                    <td>Direccion
+                        <a href="#" ng-click='campo = "address"; reverso = !reverso; addressDown = !addressDown'>
+                            <i ng-show='addressDown' class="fa fa-caret-down" aria-hidden="true"></i>
+                            <i ng-hide='addressDown' class="fa fa-caret-up" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                    <td>Telefono
+                        <a href="#" ng-click='campo = "phone"; reverso = !reverso; phoneDown = !phoneDown'>
+                            <i ng-show='phoneDown' class="fa fa-caret-down" aria-hidden="true"></i>
+                            <i ng-hide='phoneDown' class="fa fa-caret-up" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                    <td>Website
+                        <a href="#" ng-click='campo = "website"; reverso = !reverso; websiteDown = !websiteDown'>
+                            <i ng-show='websiteDown' class="fa fa-caret-down" aria-hidden="true"></i>
+                            <i ng-hide='websiteDown' class="fa fa-caret-up" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            </thead>
+            <tr ng-repeat='user in usuarios  | orderBy:campo:reverso'>
+                <td>{{$index + 1}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>
+                    <ul>
+                        <li><b>Ciudad: </b>{{user.address.city}}</li>
+                        <li><b>Calle: </b>{{user.address.street}}</li>
+                        <li><b>Suite : </b>{{user.address.suite}}</li>
+                        <li><b>Zipcode : </b>{{user.address.zipcode}}</li>
+                    </ul>
+                </td>
+                <td>{{user.phone}}</td>
+                <td>{{user.website}}</td>
+            </tr>
+        </table>
+    </div>
+    <script src="../../lib/angular/angular.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        angular.module('app', [])
+            .controller('miCtrl', ['$scope', '$filter', '$http', '$q', function($scope, $filter, $http, $q) {
+
+                function obtenerUsuarios(url) {
+                    var deferred = $q.defer();
+                    $http.get(url)
+                        .then(function successCallback(response) {
+                            deferred.resolve(response.data);
+                        }, function errorCallback(err) {
+                            deferred.reject(err);
+                        })
+
+                    return deferred.promise;
+                }
+
+                $scope.usuarios = [];
+                $scope.campo = 'name';
+                $scope.reverso = true;
+                obtenerUsuarios("https://jsonplaceholder.typicode.com/users").then(function(data) {
+                    $scope.usuarios = data;
+                    console.log($scope.usuarios);
+                }).catch(function(err) {
+                    console.log(err);
+                });
+            }]);
+    </script>
+</body>
+
+</html>

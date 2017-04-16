@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+    <meta charset="utf-8">
+    <title>Ejemplo Compile y Link</title>
+</head>
+
+<body  ng-cloak>
+    <mi-cita><div><strong>Cita 1</strong></div></br>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+        dolor in </mi-cita>
+    <mi-cita data-autor="Ricardo Alvarado"><div><strong>Cita 2</strong></div></br>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+        dolor in </mi-cita>
+    <script src="../../lib/angular/angular.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        angular.module('app', []).directive('miCita', [function() {
+            return {
+                retrict: 'E',
+                compile: function(iElement, iAttrs) {
+                    console.log(iElement.contents());
+                    var plantilla = angular.element('<blockquote></blockquote>');
+                    plantilla.append(iElement.contents());
+                    iElement.replaceWith(plantilla);
+                    return function(scope, iElement, iAttrs) {
+                        iElement.css('text-align', 'right');
+                        if (iAttrs.autor) {
+                            iElement.append('<br><span>Por: ' + iAttrs.autor + '</span>');
+                        }
+                    }
+                }
+            }
+        }])
+    </script>
+</body>
+
+</html>
